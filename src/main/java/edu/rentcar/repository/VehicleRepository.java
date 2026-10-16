@@ -16,15 +16,15 @@ public class VehicleRepository {
 
     public Vehicle save(String brand, String model, String category,
                         int modelYear, double dailyRate) {
-        Vehicle vehicle = new Vehicle(
-                "VEH-" + nextId++,
-                brand,
-                model,
-                category,
-                modelYear,
-                dailyRate,
-                "Available"
-        );
+        Vehicle vehicle = new Vehicle.Builder()
+            .id("VEH-" + nextId++)
+            .brand(brand)
+            .model(model)
+            .category(category)
+            .modelYear(modelYear)
+            .dailyRate(dailyRate)
+            .status("Available")
+            .build();
         vehicles.add(vehicle);
         return vehicle;
     }

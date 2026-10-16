@@ -9,19 +9,14 @@ public class Vehicle {
     private final double dailyRate;
     private final String status;
 
-    public Vehicle(String id, String brand, String model, String category, int modelYear) {
-        this(id, brand, model, category, modelYear, 0.0, "Available");
-    }
-
-    public Vehicle(String id, String brand, String model, String category,
-                   int modelYear, double dailyRate, String status) {
-        this.id = id;
-        this.brand = brand;
-        this.model = model;
-        this.category = category;
-        this.modelYear = modelYear;
-        this.dailyRate = dailyRate;
-        this.status = status;
+    public Vehicle(Builder builder) {
+        this.id = builder.id;
+        this.brand = builder.brand;
+        this.model = builder.model;
+        this.category = builder.category;
+        this.modelYear = builder.modelYear;
+        this.dailyRate = builder.dailyRate;
+        this.status = builder.status;
     }
 
     public String getId() {
@@ -54,5 +49,54 @@ public class Vehicle {
 
     public String getDisplayName() {
         return brand + " " + model;
+    }
+
+    public static class Builder {
+        private String id;
+        private String brand;
+        private String model;
+        private String category;
+        private int modelYear;
+        private double dailyRate;
+        private String status;
+
+        public Builder id (String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder brand (String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public Builder model (String model) {
+            this.model = model;
+            return this;
+        }
+
+        public Builder category (String category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder modelYear (int modelYear) {
+            this.modelYear =modelYear;
+            return this;
+        }
+
+        public Builder dailyRate (double dailyRate) {
+            this.dailyRate = dailyRate;
+            return this;
+        }
+
+        public Builder status (String status) {
+            this.status = status;
+            return this;
+        }
+
+        public Vehicle build() {
+            return new Vehicle(this);
+        }
     }
 }
