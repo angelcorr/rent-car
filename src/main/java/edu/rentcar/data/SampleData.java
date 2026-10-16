@@ -19,10 +19,42 @@ public final class SampleData {
 
     public static List<Vehicle> vehicles() {
         return List.of(
-                new Vehicle("VEH-1001", "Toyota", "Corolla", "Economy", 2024, 150000, "Available"),
-                new Vehicle("VEH-1002", "Mazda", "CX-5", "Executive", 2025, 230000, "Available"),
-                new Vehicle("VEH-1003", "BMW", "320i", "Premium", 2024, 380000, "Available"),
-                new Vehicle("VEH-1004", "Renault", "Duster", "Executive", 2023, 210000, "Available")
+                new Vehicle.Builder()
+                    .id("VEH-1001")
+                    .brand("Toyota")
+                    .model("Corolla")
+                    .category("Economy")
+                    .modelYear(2024)
+                    .dailyRate(150000)
+                    .status("Available")
+                    .build(),
+                new Vehicle.Builder()
+                    .id("VEH-1002")
+                    .brand("Mazda")
+                    .model("CX-5")
+                    .category("Executive")
+                    .modelYear(2025)
+                    .dailyRate(230000)
+                    .status("Available")
+                    .build(),
+                new Vehicle.Builder()
+                    .id("VEH-1003")
+                    .brand("BMW")
+                    .model("320i")
+                    .category("Premium")
+                    .modelYear(2024)
+                    .dailyRate(380000)
+                    .status("Available")
+                    .build(),
+                new Vehicle.Builder()
+                    .id("VEH-1004")
+                    .brand("Renault")
+                    .model("Duster")
+                    .category("Executive")
+                    .modelYear(2023)
+                    .dailyRate(210000)
+                    .status("Available")
+                    .build()
         );
     }
 }
