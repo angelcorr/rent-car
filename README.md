@@ -4,9 +4,8 @@
 
 ## 1. Integrantes
 
-- Nombre completo — código estudiantil
-- Nombre completo — código estudiantil
-- Nombre completo — código estudiantil (si aplica)
+- Angeles Emiliana Rondon Corrales — 1.022.211
+- Daniel Felipe Monsalve Montalvo — 1.001.411.967
 
 ## 2. Descripción de la solución
 
