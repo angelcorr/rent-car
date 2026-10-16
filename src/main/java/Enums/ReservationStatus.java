@@ -1,6 +1,6 @@
 package Enums;
 
-public enum ReservationState {
+public enum ReservationStatus {
     COMPLETED,
     PENDING,
     FAILED,
