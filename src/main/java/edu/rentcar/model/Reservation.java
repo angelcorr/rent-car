@@ -1,5 +1,7 @@
 package edu.rentcar.model;
 
+import Enums.ReservationState;
+
 import java.time.LocalDate;
 
 public class Reservation {
@@ -8,16 +10,16 @@ public class Reservation {
     private final String vehicleId;
     private final LocalDate startDate;
     private final LocalDate endDate;
-    private final String status;
+    private final ReservationState status;
 
-    public Reservation(String id, String customerId, String vehicleId,
-                       LocalDate startDate, LocalDate endDate, String status) {
-        this.id = id;
-        this.customerId = customerId;
-        this.vehicleId = vehicleId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
+
+    private Reservation(Builder builder){
+        this.id = builder.id;
+        this.customerId = builder.customerId;
+        this.vehicleId = builder.vehicleId;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+        this.status = builder.status;
     }
 
     public String getId() {
@@ -40,7 +42,52 @@ public class Reservation {
         return endDate;
     }
 
-    public String getStatus() {
+    public ReservationState getStatus() {
         return status;
     }
+
+    //Create Class Builder
+    public static class Builder{
+        private String id;
+        private String customerId;
+        private String vehicleId;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private ReservationState status;
+
+
+    public Builder id (String id){
+        this.id= id;
+        return this;
+    }
+
+    public Builder customerId (String customerId){
+        this.customerId= customerId;
+        return this;
+    }
+
+    public Builder vehicleId (String vehicleId){
+        this.vehicleId= vehicleId;
+        return this;
+    }
+
+    public Builder startDate (LocalDate startDate){
+        this.startDate= startDate;
+        return this;
+    }
+
+    public Builder endDate (LocalDate endDate){
+        this.endDate= endDate;
+        return this;
+    }
+
+    public Builder status (ReservationState status){
+        this.status= status;
+        return this;
+    }
+
+    public Reservation build(){
+        return new Reservation(this);
+  }
+   }
 }
