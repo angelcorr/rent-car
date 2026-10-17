@@ -1,6 +1,6 @@
 package edu.rentcar.model;
 
-import enums.ReservationStatus;
+import edu.rentcar.enums.ReservationStatus;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package enums;
+package edu.rentcar.enums;
 
 public enum ReservationStatus {
     COMPLETED,

@@ -1,11 +1,11 @@
-package factory;
+package edu.rentcar.factory;
 
 import edu.rentcar.interfaces.Assistance;
 
-public class ExecutiveAssitance implements Assistance {
+public class PremiumAssistance implements Assistance {
     private final double cost;
 
-    public ExecutiveAssitance(double cost) {
+    public PremiumAssistance(double cost) {
         this.cost = cost;
     }
 

@@ -1,7 +1,7 @@
 package edu.rentcar.service;
 
 import edu.rentcar.model.Reservation;
-import enums.ReservationStatus;
+import edu.rentcar.enums.ReservationStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
