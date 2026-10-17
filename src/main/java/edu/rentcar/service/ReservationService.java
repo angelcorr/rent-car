@@ -1,34 +1,39 @@
 package edu.rentcar.service;
 
-import Enums.ReservationStatus;
+import enums.ReservationStatus;
 import edu.rentcar.model.Reservation;
-
+import edu.rentcar.interfaces.RentalModalityFactory;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 
 public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<>();
 
     //Initialize reservation as pending
-    public Reservation createPendingReservation(String id, String customerId, String vehicleId, LocalDate starDate, LocalDate endDate) {
+    public Reservation createPendingReservation(String id, String customerId, String vehicleId, LocalDate starDate, LocalDate endDate,String modality) {
 
         String cleanId = requireText(id,"Reservation id");
         String cleanCustomerId = requireText(customerId, "Customer id");
         String cleanVehicleId = requireText(vehicleId, "Vehicle id");
+        String cleanModality = requireText(modality, "Modality");
         validateDates(starDate, endDate);
+
+        ModalityFactorySelector.factoryFor(cleanModality);
 
         if (existsReservation(cleanId)) {
             throw new IllegalStateException("A reservation with this id already exists: " + cleanId);
         }
 
         Reservation reservation = new Reservation.Builder()
-                .id(id)
-                .customerId(customerId)
-                .vehicleId(vehicleId)
+                .id(cleanId)
+                .customerId(cleanCustomerId)
+                .vehicleId(cleanVehicleId)
                 .startDate(starDate)
                 .endDate(endDate)
                 .status(ReservationStatus.PENDING)
+                .modality(cleanModality)
                 .build();
 
         reservations.add(reservation);
@@ -38,12 +43,12 @@ public class ReservationService {
 
     // pending confirmed
     public Reservation confirm(String id){
-        return changeStatus(id, ReservationStatus.COMPLETED);
+        return changeStatus(id, ReservationStatus.PENDING,ReservationStatus.COMPLETED);
     }
 
     // pending confirmed
     public Reservation fail (String id){
-        return changeStatus(id, ReservationStatus.FAILED);
+        return changeStatus(id, ReservationStatus.PENDING, ReservationStatus.FAILED);
     }
 
 
@@ -72,21 +77,37 @@ public class ReservationService {
     }
 
     //Create method for validated Reservation
-    private Reservation changeStatus(String id, ReservationStatus nextStatus){
+    private Reservation changeStatus(String id, ReservationStatus expected, ReservationStatus next){
         Reservation current = findReservation(id);
-
+        if (current.getStatus() != expected) {
+            throw new IllegalStateException("Reservation " + id + " is " + current.getStatus()
+                    + ", expected " + expected);
+        }
         Reservation updated = new Reservation.Builder()
                 .id(current.getId())
                 .customerId(current.getCustomerId())
                 .vehicleId(current.getVehicleId())
                 .startDate(current.getStartDate())
                 .endDate(current.getEndDate())
-                .status(nextStatus)
+                .status(next)
+                .modality(current.getModality())
                 .build();
 
         //replace of list ( reemplazo la lista anterior)
         reservations.set(reservations.indexOf(current), updated);
         return updated;
+    }
+
+    //
+    // Calcula el costo total: tarifa base por días + modalidad para calcular el costo de las modalidades premium executivo
+    public double calculateCost(LocalDate startDate, LocalDate endDate, double dailyRate, String modality) {
+        validateDates(startDate, endDate);
+
+        long days = ChronoUnit.DAYS.between(startDate, endDate);
+        double baseCost = new BaseCharge((int) days, dailyRate).getCost();
+
+        RentalModalityFactory factory = ModalityFactorySelector.factoryFor(modality);
+        return new RentalCostCalculatorServices(factory).calculate(baseCost);
     }
 
     //create method for validateDate
@@ -96,7 +117,7 @@ public class ReservationService {
         }
 
         if (!startDate.isBefore(endDate)){
-            throw new IllegalArgumentException("Strar date must be before end date");
+            throw new IllegalArgumentException("Start date must be before end date");
         }
     }
 

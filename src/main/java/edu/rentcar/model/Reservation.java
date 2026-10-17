@@ -1,6 +1,6 @@
 package edu.rentcar.model;
 
-import Enums.ReservationStatus;
+import enums.ReservationStatus;
 
 import java.time.LocalDate;
 
@@ -11,7 +11,7 @@ public class Reservation {
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final ReservationStatus status;
-
+    private final String modality;
 
     private Reservation(Builder builder){
         this.id = builder.id;
@@ -20,6 +20,7 @@ public class Reservation {
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
         this.status = builder.status;
+        this.modality = builder.modality;
     }
 
     public String getId() {
@@ -46,6 +47,9 @@ public class Reservation {
         return status;
     }
 
+    public String getModality() {
+        return modality;
+    }
     //Create Class Builder
     public static class Builder{
         private String id;
@@ -54,7 +58,7 @@ public class Reservation {
         private LocalDate startDate;
         private LocalDate endDate;
         private ReservationStatus status;
-
+        private String modality;
 
     public Builder id (String id){
         this.id= id;
@@ -85,6 +89,10 @@ public class Reservation {
         this.status= status;
         return this;
     }
+        public Builder modality (String modality){
+            this.modality= modality;
+            return this;
+        }
 
     public Reservation build(){
         return new Reservation(this);
