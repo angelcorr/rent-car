@@ -45,7 +45,15 @@ public class ReservationService {
 
     // pending confirmed
     public Reservation confirm(String id){
-        return changeStatus(id, ReservationStatus.PENDING,ReservationStatus.COMPLETED);
+        Reservation pending= findReservation(id);
+
+        ReservationStatus next;
+        if(isAvailable(pending.getVehicleId(), pending.getStartDate(), pending.getEndDate())){
+            next = ReservationStatus.COMPLETED;
+        } else {
+            next = ReservationStatus.FAILED;
+        }
+        return changeStatus(id, ReservationStatus.PENDING,next);
     }
 
     // pending confirmed
