@@ -12,25 +12,22 @@ import java.time.temporal.ChronoUnit;
 
 public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<>();
-
+    private  int nextReservationNumber = 1;
     //Initialize reservation as pending
-    public Reservation createPendingReservation(String id, String customerId, String vehicleId, LocalDate starDate, LocalDate endDate,String modality) {
+    public Reservation createPendingReservation( String customerId, String vehicleId, LocalDate startDate, LocalDate endDate,String modality) {
 
-        String cleanId = requireText(id,"Reservation id");
+
         String cleanCustomerId = requireText(customerId, "Customer id");
         String cleanVehicleId = requireText(vehicleId, "Vehicle id");
         String cleanModality = requireText(modality, "Modality");
-        validateDates(starDate, endDate);
-
-        if (existsReservation(cleanId)) {
-            throw new IllegalStateException("A reservation with this id already exists: " + cleanId);
-        }
+        validateDates(startDate, endDate);
+        String id = String.format("RES-%04d", nextReservationNumber++);
 
         Reservation reservation = new Reservation.Builder()
-                .id(cleanId)
+                .id(id)
                 .customerId(cleanCustomerId)
                 .vehicleId(cleanVehicleId)
-                .startDate(starDate)
+                .startDate(startDate)
                 .endDate(endDate)
                 .status(ReservationStatus.PENDING)
                 .modality(cleanModality)

@@ -23,50 +23,51 @@ class ReservationServiceTest {
 
     @Test
     void newReservationStartsPending() {
-        Reservation reservation = service.createPendingReservation("R1", "C1", "V1", start, end,"Economy");
+        Reservation reservation = service.createPendingReservation( "C1", "V1", start, end,"Economy");
         assertEquals(ReservationStatus.PENDING, reservation.getStatus());
     }
 
     @Test
     void endDateBeforeStartDateIsRejected() {
         assertThrows(IllegalArgumentException.class,
-                () -> service.createPendingReservation("R1", "C1", "V1", end, start,"Economy"));
+                () -> service.createPendingReservation( "C1", "V1", end, start,"Economy"));
     }
 
     @Test
     void sameStartAndEndDateIsRejected() {
         assertThrows(IllegalArgumentException.class,
-                () -> service.createPendingReservation("R1", "C1", "V1", start, start,"Economy"));
+                () -> service.createPendingReservation( "C1", "V1", start, start,"Economy"));
     }
 
     @Test
     void blankCustomerIdIsRejected() {
         assertThrows(IllegalArgumentException.class,
-                () -> service.createPendingReservation("R1", "   ", "V1", start, end,"Economy"));
+                () -> service.createPendingReservation( "   ", "V1", start, end,"Economy"));
     }
 
     @Test
-    void duplicatedIdIsRejected() {
-        service.createPendingReservation("R1", "C1", "V1", start, end,"Economy");
+    void reservationIdsAreGeneratedInSequence() {
+        Reservation first = service.createPendingReservation("C1", "V1", start, end, "Economy");
+        Reservation second = service.createPendingReservation("C2", "V2", start, end, "Economy");
 
-        assertThrows(IllegalStateException.class,
-                () -> service.createPendingReservation("R1", "C2", "V2", start, end,"Economy"));
+        assertEquals("RES-0001", first.getId());
+        assertEquals("RES-0002", second.getId());
     }
 
     @Test
     void pendingReservationCanBeConfirmed() {
-        service.createPendingReservation("R1", "C1", "V1", start, end,"Economy");
+        String id = service.createPendingReservation("C1", "V1", start, end, "Economy").getId();
 
-        Reservation confirmed = service.confirm("R1");
+        Reservation confirmed = service.confirm(id);
 
         assertEquals(ReservationStatus.COMPLETED, confirmed.getStatus());
     }
 
     @Test
     void confirmedReservationCannotFail() {
-        service.createPendingReservation("R1", "C1", "V1", start, end,"Economy");
-        service.confirm("R1");
+        String id= service.createPendingReservation( "C1", "V1", start, end,"Economy").getId();
+        service.confirm(id);
 
-        assertThrows(IllegalStateException.class, () -> service.fail("R1"));
+        assertThrows(IllegalStateException.class, () -> service.fail(id));
     }
 }
