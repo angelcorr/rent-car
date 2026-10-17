@@ -1,5 +1,6 @@
 package edu.rentcar.service;
 
+import edu.rentcar.pricing.BaseCharge;
 import enums.ReservationStatus;
 import edu.rentcar.model.Reservation;
 import edu.rentcar.interfaces.RentalModalityFactory;
@@ -7,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.temporal.ChronoUnit;
+
 
 public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<>();
@@ -19,8 +21,6 @@ public class ReservationService {
         String cleanVehicleId = requireText(vehicleId, "Vehicle id");
         String cleanModality = requireText(modality, "Modality");
         validateDates(starDate, endDate);
-
-        ModalityFactorySelector.factoryFor(cleanModality);
 
         if (existsReservation(cleanId)) {
             throw new IllegalStateException("A reservation with this id already exists: " + cleanId);
@@ -100,13 +100,14 @@ public class ReservationService {
 
     //
     // Calcula el costo total: tarifa base por días + modalidad para calcular el costo de las modalidades premium executivo
-    public double calculateCost(LocalDate startDate, LocalDate endDate, double dailyRate, String modality) {
+    public double calculateCost(LocalDate startDate, LocalDate endDate, double dailyRate, String modality, double coverage, double assistance) {
+
         validateDates(startDate, endDate);
 
         long days = ChronoUnit.DAYS.between(startDate, endDate);
         double baseCost = new BaseCharge((int) days, dailyRate).getCost();
 
-        RentalModalityFactory factory = ModalityFactorySelector.factoryFor(modality);
+        RentalModalityFactory factory = ModalityFactorySelector.factoryFor(modality, coverage, assistance);
         return new RentalCostCalculatorServices(factory).calculate(baseCost);
     }
 
