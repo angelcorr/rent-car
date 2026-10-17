@@ -1,11 +1,11 @@
-package factory;
+package edu.rentcar.factory;
 
 import edu.rentcar.interfaces.Assistance;
 
-public class EconomicAssistance implements Assistance {
+public class ExecutiveAssitance implements Assistance {
     private final double cost;
 
-    public EconomicAssistance(double cost) {
+    public ExecutiveAssitance(double cost) {
         this.cost = cost;
     }
 
@@ -14,5 +14,3 @@ public class EconomicAssistance implements Assistance {
         return cost;
     }
 }
-
-

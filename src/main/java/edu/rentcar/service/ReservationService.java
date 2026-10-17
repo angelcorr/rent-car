@@ -1,7 +1,7 @@
 package edu.rentcar.service;
 
 import edu.rentcar.pricing.BaseCharge;
-import enums.ReservationStatus;
+import edu.rentcar.enums.ReservationStatus;
 import edu.rentcar.model.Reservation;
 import edu.rentcar.interfaces.RentalModalityFactory;
 import java.time.LocalDate;

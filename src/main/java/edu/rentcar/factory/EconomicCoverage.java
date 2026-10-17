@@ -1,11 +1,11 @@
-package factory;
+package edu.rentcar.factory;
 
 import edu.rentcar.interfaces.Coverage;
 
-public class PremiumCoverage implements Coverage {
+public class EconomicCoverage implements Coverage {
     private final double cost;
 
-    public PremiumCoverage(double cost) {
+    public EconomicCoverage(double cost) {
         this.cost = cost;
     }
 

@@ -1,4 +1,4 @@
-package factory;
+package edu.rentcar.factory;
 
 import edu.rentcar.interfaces.TariffPolicy;
 

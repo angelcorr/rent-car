@@ -1,9 +1,9 @@
 package edu.rentcar.service;
 
 import edu.rentcar.interfaces.RentalModalityFactory;
-import factory.EconomicFactory;
-import factory.ExecutiveFactory;
-import factory.PremiumFactory;
+import edu.rentcar.factory.EconomicFactory;
+import edu.rentcar.factory.ExecutiveFactory;
+import edu.rentcar.factory.PremiumFactory;
 
 public final class ModalityFactorySelector {
     private ModalityFactorySelector() {
