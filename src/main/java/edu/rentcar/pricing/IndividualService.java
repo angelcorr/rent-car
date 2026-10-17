@@ -1,6 +1,4 @@
-package edu.rentcar.service;
-
-import edu.rentcar.interfaces.RentService;
+package edu.rentcar.pricing;
 
 public class IndividualService implements RentService {
   private final String name;

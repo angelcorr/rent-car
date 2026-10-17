@@ -1,4 +1,4 @@
-package edu.rentcar.interfaces;
+package edu.rentcar.pricing;
 
 public interface RentService {
   double getCost();
