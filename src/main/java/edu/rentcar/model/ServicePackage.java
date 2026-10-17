@@ -11,10 +11,17 @@ public class ServicePackage implements RentService {
   private final String description;
   private final List<RentService> servicesList = new ArrayList<>();
 
-  public ServicePackage(String name, String description, RentService... rentService) {
-    this.name = name;
-    this.description = description;
-    servicesList.addAll(Arrays.asList(rentService));
+  public ServicePackage(String name, String description) {
+    if(name == null || name.trim().isEmpty()) {
+      throw new IllegalArgumentException("Package name is required");
+    }
+
+    this.name = name.trim();
+    this.description = description == null ? "" : description.trim();
+  }
+
+  public void add(RentService rentService) {
+    servicesList.add(rentService);
   }
 
   public String getName () {
@@ -30,6 +37,10 @@ public class ServicePackage implements RentService {
 
   @Override
   public String getDescription() {
-    return description;
+    StringBuilder result = new StringBuilder(name + " (" + description + "): ");
+    for (RentService service : servicesList) {
+      result.append(service.getDescription()).append(", ");
+    }
+    return result.toString();
   }
 }
