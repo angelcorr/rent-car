@@ -21,6 +21,11 @@ public class ReservationService {
         String cleanVehicleId = requireText(vehicleId, "Vehicle id");
         String cleanModality = requireText(modality, "Modality");
         validateDates(startDate, endDate);
+        
+        if (!isAvailable(cleanVehicleId, startDate, endDate)) {
+            throw new IllegalStateException("Vehicle " + cleanVehicleId
+                    + " is not available from " + startDate + " to " + endDate + ".");
+        }
         String id = String.format("RES-%04d", nextReservationNumber++);
 
         Reservation reservation = new Reservation.Builder()
@@ -95,7 +100,24 @@ public class ReservationService {
         return updated;
     }
 
-    //
+    //Check whether the vehicle is available between these two dates
+    public boolean isAvailable(String vehicleId, LocalDate startDate, LocalDate endDate) {
+        for (Reservation reservation : reservations) {
+            if (!reservation.getVehicleId().equals(vehicleId)) {
+                continue;
+            }
+            if (reservation.getStatus() != ReservationStatus.COMPLETED) {
+                continue;
+            }
+            boolean overlaps = startDate.isBefore(reservation.getEndDate())
+                    && reservation.getStartDate().isBefore(endDate);
+            if (overlaps) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Calcula el costo total: tarifa base por días + modalidad para calcular el costo de las modalidades premium executivo
     public double calculateCost(LocalDate startDate, LocalDate endDate, double dailyRate, String modality, double coverage, double assistance) {
 
