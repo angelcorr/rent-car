@@ -1,6 +1,6 @@
 package edu.rentcar.model;
 
-import edu.rentcar.interfaces.RentService;
+import edu.rentcar.pricing.RentService;
 
 import java.util.ArrayList;
 import java.util.Arrays;

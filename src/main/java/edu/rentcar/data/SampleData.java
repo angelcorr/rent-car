@@ -2,6 +2,7 @@ package edu.rentcar.data;
 
 import edu.rentcar.model.Customer;
 import edu.rentcar.model.Vehicle;
+import edu.rentcar.pricing.IndividualService;
 
 import java.util.List;
 
@@ -55,6 +56,14 @@ public final class SampleData {
                     .dailyRate(210000)
                     .status("Available")
                     .build()
+        );
+    }
+
+    public static List<IndividualService> additionalServices() {
+        return List.of(
+            new IndividualService("GPS", 100000, "GPS"),
+            new IndividualService("Child seat", 150000, "Child seat"),
+            new IndividualService("Additional driver", 200000, "Additional driver")
         );
     }
 }
