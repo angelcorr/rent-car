@@ -9,15 +9,15 @@ public final class ModalityFactorySelector {
     private ModalityFactorySelector() {
     }
 
-    public static RentalModalityFactory factoryFor(String modality) {
+    public static RentalModalityFactory factoryFor(String modality, double coverage, double assistance) {
         if (modality == null || modality.isBlank()) {
             throw new IllegalArgumentException("Modality is required.");
         }
 
         return switch (modality.trim()) {
-            case "Economy" -> new EconomicFactory();
-          case "Executive" -> new ExecutiveFactory();
-            case "Premium" -> new PremiumFactory();
+            case "Economy" -> new EconomicFactory(coverage, assistance);
+            case "Executive" -> new ExecutiveFactory(coverage, assistance);
+            case "Premium" -> new PremiumFactory(coverage, assistance);
             default -> throw new IllegalArgumentException("Unknown modality: " + modality);
         };
     }
