@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ExtraServiceDecorator extends ServiceDecorator {
   private final RentService extra;
 
-  protected ExtraServiceDecorator(RentService wrapped, RentService extra) {
+  public ExtraServiceDecorator(RentService wrapped, RentService extra) {
     super(wrapped);
     this.extra = Objects.requireNonNull(extra, "Extra service is required.");
   }

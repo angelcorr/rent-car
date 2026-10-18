@@ -1,4 +1,4 @@
-package edu.rentcar.interfaces;
+package edu.rentcar.factory;
 
     public interface RentalModalityFactory {
         TariffPolicy createTariffPolicy();

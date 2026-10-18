@@ -3,7 +3,7 @@ package edu.rentcar.service;
 import edu.rentcar.pricing.BaseCharge;
 import edu.rentcar.enums.ReservationStatus;
 import edu.rentcar.model.Reservation;
-import edu.rentcar.interfaces.RentalModalityFactory;
+import edu.rentcar.factory.RentalModalityFactory;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,18 @@ public class ReservationService {
     private final List<Reservation> reservations = new ArrayList<>();
     private  int nextReservationNumber = 1;
     //Initialize reservation as pending
-    public Reservation createPendingReservation( String customerId, String vehicleId, LocalDate startDate, LocalDate endDate,String modality) {
+    public Reservation createPendingReservation( String customerId, String vehicleId, LocalDate startDate, LocalDate endDate, String modality, double totalCost, String description) {
 
 
         String cleanCustomerId = requireText(customerId, "Customer id");
         String cleanVehicleId = requireText(vehicleId, "Vehicle id");
         String cleanModality = requireText(modality, "Modality");
+        String cleanDescription = requireText(description, "Description");
         validateDates(startDate, endDate);
+
+        if (!Double.isFinite(totalCost) || totalCost <= 0) {
+            throw new IllegalArgumentException("Total cost must be greater than zero");
+        }
         
         if (!isAvailable(cleanVehicleId, startDate, endDate)) {
             throw new IllegalStateException("Vehicle " + cleanVehicleId
@@ -36,6 +41,8 @@ public class ReservationService {
                 .endDate(endDate)
                 .status(ReservationStatus.PENDING)
                 .modality(cleanModality)
+                .totalCost(totalCost)
+                .description(cleanDescription)
                 .build();
 
         reservations.add(reservation);
@@ -49,7 +56,7 @@ public class ReservationService {
 
         ReservationStatus next;
         if(isAvailable(pending.getVehicleId(), pending.getStartDate(), pending.getEndDate())){
-            next = ReservationStatus.COMPLETED;
+            next = ReservationStatus.CONFIRMED;
         } else {
             next = ReservationStatus.FAILED;
         }
@@ -66,7 +73,7 @@ public class ReservationService {
         return new ArrayList<>(reservations);
     }
 
-// For each for findReservation
+    // For each for findReservation
     private Reservation findReservation(String id){
         for (Reservation reservation : reservations){
             if (reservation.getId().equals(id)) {
@@ -101,6 +108,8 @@ public class ReservationService {
                 .endDate(current.getEndDate())
                 .status(next)
                 .modality(current.getModality())
+                .totalCost(current.getTotalCost())
+                .description(current.getDescription())
                 .build();
 
         //replace of list ( reemplazo la lista anterior)
@@ -114,7 +123,7 @@ public class ReservationService {
             if (!reservation.getVehicleId().equals(vehicleId)) {
                 continue;
             }
-            if (reservation.getStatus() != ReservationStatus.COMPLETED) {
+            if (reservation.getStatus() != ReservationStatus.CONFIRMED) {
                 continue;
             }
             boolean overlaps = startDate.isBefore(reservation.getEndDate())
@@ -134,7 +143,7 @@ public class ReservationService {
         long days = ChronoUnit.DAYS.between(startDate, endDate);
         double baseCost = new BaseCharge((int) days, dailyRate).getCost();
 
-        RentalModalityFactory factory = ModalityFactorySelector.factoryFor(modality, coverage, assistance);
+        RentalModalityFactory factory = ModalityFactorySelector.factoryFor(modality);
         return new RentalCostCalculatorServices(factory).calculate(baseCost);
     }
 

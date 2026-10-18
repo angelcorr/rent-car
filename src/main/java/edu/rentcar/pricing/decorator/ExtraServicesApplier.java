@@ -2,7 +2,7 @@ package edu.rentcar.pricing.decorator;
 import java.util.List;
 import edu.rentcar.pricing.RentService;
 
-public class ExtraServicesApplier {
+public final class ExtraServicesApplier {
     private ExtraServicesApplier() {
     }
 

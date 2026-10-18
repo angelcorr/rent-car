@@ -1,10 +1,5 @@
 package edu.rentcar.factory;
 
-import edu.rentcar.interfaces.Assistance;
-import edu.rentcar.interfaces.Coverage;
-import edu.rentcar.interfaces.RentalModalityFactory;
-import edu.rentcar.interfaces.TariffPolicy;
-
 public class PremiumFactory implements RentalModalityFactory {
     private final double coverageCost;
     private final double assistanceCost;
@@ -21,11 +16,11 @@ public class PremiumFactory implements RentalModalityFactory {
 
     @Override
     public Coverage createCoverage() {
-        return new PremiumCoverage(coverageCost);
+        return new FixedCoverage(coverageCost);
     }
 
     @Override
     public Assistance createAssistance() {
-        return new PremiumAssistance(assistanceCost);
+        return new FixedAssistance(assistanceCost);
     }
 }
