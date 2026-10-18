@@ -15,27 +15,40 @@
         <Label text="Customer" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
         <ComboBox fx:id="customerCombo" maxWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-
         <Label text="Vehicle" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
         <ComboBox fx:id="vehicleCombo" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
 
         <Label text="Start date" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
         <DatePicker fx:id="startDatePicker" maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-
         <Label text="End date" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
         <DatePicker fx:id="endDatePicker" maxWidth="Infinity" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
 
         <Label text="Modality" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
         <ComboBox fx:id="modalityCombo" maxWidth="Infinity" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
-
         <Label text="Payment token" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-        <TextField fx:id="paymentTokenField" promptText="tok_approved" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <ComboBox fx:id="tokenCombo" maxWidth="Infinity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Extras (Ctrl+click)" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <ListView fx:id="servicesList" prefHeight="120" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
     </GridPane>
 
-    <Button text="Create reservation" onAction="#onCreateReservation"/>
+    <HBox spacing="12">
+        <Button text="Create reservation" onAction="#onCreateReservation"/>
+        <Button text="Clear" onAction="#onClear"/>
+    </HBox>
+
     <Label fx:id="resultLabel" wrapText="true"/>
+
+    <TableView fx:id="reservationTable" prefHeight="200">
+        <columns>
+            <TableColumn fx:id="resIdColumn" text="Reservation" prefWidth="100"/>
+            <TableColumn fx:id="resCustomerColumn" text="Customer" prefWidth="100"/>
+            <TableColumn fx:id="resVehicleColumn" text="Vehicle" prefWidth="100"/>
+            <TableColumn fx:id="resModalityColumn" text="Modality" prefWidth="100"/>
+            <TableColumn fx:id="resStatusColumn" text="Status" prefWidth="110"/>
+            <TableColumn fx:id="resCostColumn" text="Total cost" prefWidth="120"/>
+        </columns>
+    </TableView>
 </VBox>

@@ -3,10 +3,22 @@ package edu.rentcar.data;
 import edu.rentcar.model.Customer;
 import edu.rentcar.model.Vehicle;
 import edu.rentcar.pricing.IndividualService;
+import edu.rentcar.pricing.RentService;
+import edu.rentcar.pricing.ServicePackage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class SampleData {
+    private static final IndividualService GPS =
+        new IndividualService("GPS", 15_000, "GPS");
+    private static final IndividualService CHILD_SEAT =
+        new IndividualService("Child seat", 20_000, "Child seat");
+    private static final IndividualService ADDITIONAL_DRIVER =
+        new IndividualService("Additional driver", 25_000, "Additional driver");
+    private static final IndividualService WIFI =
+        new IndividualService("WiFi", 10_000, "WiFi");
+
     private SampleData() {
     }
 
@@ -60,10 +72,33 @@ public final class SampleData {
     }
 
     public static List<IndividualService> additionalServices() {
-        return List.of(
-            new IndividualService("GPS", 100000, "GPS"),
-            new IndividualService("Child seat", 150000, "Child seat"),
-            new IndividualService("Additional driver", 200000, "Additional driver")
-        );
+        return List.of(GPS, CHILD_SEAT, ADDITIONAL_DRIVER, WIFI);
+    }
+
+    public static List<ServicePackage> servicePackages() {
+        ServicePackage family = new ServicePackage("Family pack", "For trips with children");
+        family.add(CHILD_SEAT);
+        family.add(ADDITIONAL_DRIVER);
+
+        ServicePackage travel = new ServicePackage("Travel pack", "For long trips");
+        travel.add(GPS);
+        travel.add(WIFI);
+
+        ServicePackage complete = new ServicePackage("Complete pack", "Everything included");
+        complete.add(family);
+        complete.add(travel);
+
+        List<ServicePackage> packages = new ArrayList<>();
+        packages.add(family);
+        packages.add(travel);
+        packages.add(complete);
+        return packages;
+    }
+
+    public static List<RentService> allOfferedServices() {
+        List<RentService> offered = new ArrayList<>();
+        offered.addAll(additionalServices());
+        offered.addAll(servicePackages());
+        return offered;
     }
 }
