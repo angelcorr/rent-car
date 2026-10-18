@@ -83,16 +83,6 @@ public class ReservationService {
         throw new IllegalArgumentException("Reservation not found :" + id);
     }
 
-   //For each for existsReservation
-    private boolean existsReservation(String id) {
-        for (Reservation reservation : reservations) {
-            if (reservation.getId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     //Create method for validated Reservation
     private Reservation changeStatus(String id, ReservationStatus expected, ReservationStatus next){
         Reservation current = findReservation(id);
