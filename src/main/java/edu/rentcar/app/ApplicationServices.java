@@ -5,7 +5,7 @@ import edu.rentcar.facade.RentalFacade;
 import edu.rentcar.payment.PaymentApiAdapter;
 import edu.rentcar.payment.PaymentGateway;
 import edu.rentcar.payment.PaymentGatewayProxy;
-import edu.rentcar.payment.SampleDataCustomerVerifier;
+import edu.rentcar.payment.SampleDataCustomerVerificationService;
 import edu.rentcar.repository.VehicleRepository;
 import edu.rentcar.service.ReservationService;
 import edu.rentcar.service.VehicleService;
@@ -20,7 +20,7 @@ public final class ApplicationServices {
 
     private static final PaymentGateway PAYMENT_GATEWAY = new PaymentGatewayProxy(
         new PaymentApiAdapter(PAYMENT_API_CLIENT::pay),
-        new SampleDataCustomerVerifier());
+        new SampleDataCustomerVerificationService());
 
     private static final RentalFacade RENTAL_FACADE = new RentalFacade(VEHICLE_SERVICE, RESERVATION_SERVICE, PAYMENT_GATEWAY);
 

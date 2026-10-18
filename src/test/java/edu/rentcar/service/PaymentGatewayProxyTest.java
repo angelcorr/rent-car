@@ -3,7 +3,7 @@ package edu.rentcar.service;
 import edu.rentcar.payment.PaymentGateway;
 import edu.rentcar.payment.PaymentGatewayProxy;
 import edu.rentcar.payment.PaymentStatus;
-import edu.rentcar.payment.SampleDataCustomerVerifier;
+import edu.rentcar.payment.SampleDataCustomerVerificationService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,7 +58,7 @@ public class PaymentGatewayProxyTest {
 
   @Test
   void sampleDataVerifierUsesCustomerAuthorization() {
-    SampleDataCustomerVerifier verifier = new SampleDataCustomerVerifier();
+    SampleDataCustomerVerificationService verifier = new SampleDataCustomerVerificationService();
 
     assertEquals(true, verifier.isAuthorized("CUS-1001"));
     assertEquals(false, verifier.isAuthorized("CUS-1003"));
