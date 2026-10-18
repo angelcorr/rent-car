@@ -10,8 +10,8 @@ public class RentalRequest {
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final String modality;
+    private final String paymentToken;
     private final List<RentService> services;
-
 
     private RentalRequest(Builder builder) {
         this.customerId = builder.customerId;
@@ -19,9 +19,9 @@ public class RentalRequest {
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
         this.modality = builder.modality;
+        this.paymentToken = builder.paymentToken;
         this.services = List.copyOf(builder.services);
     }
-
 
     // getters
     public String getCustomerId() {
@@ -44,6 +44,10 @@ public class RentalRequest {
         return modality;
     }
 
+    public String getPaymentToken() {
+        return paymentToken;
+    }
+
     public List<RentService> getServices() {
         return services;
     }
@@ -55,6 +59,7 @@ public class RentalRequest {
         private LocalDate startDate;
         private LocalDate endDate;
         private String modality;
+        private String paymentToken;
         private final List<RentService> services = new ArrayList<>();
 
 
@@ -83,10 +88,16 @@ public class RentalRequest {
             return this;
         }
 
+        public Builder paymentToken(String paymentToken) {
+            this.paymentToken = paymentToken;
+            return this;
+        }
+
         public Builder addService(RentService service) {
             this.services.add(service);
             return this;
         }
+
         public RentalRequest build() {
             return new RentalRequest(this);
         }

@@ -136,7 +136,7 @@ public class ReservationService {
     }
 
     // Calcula el costo total: tarifa base por días + modalidad para calcular el costo de las modalidades premium executivo
-    public double calculateCost(LocalDate startDate, LocalDate endDate, double dailyRate, String modality, double coverage, double assistance) {
+    public double calculateCost(LocalDate startDate, LocalDate endDate, double dailyRate, String modality) {
 
         validateDates(startDate, endDate);
 
