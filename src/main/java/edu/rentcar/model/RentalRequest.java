@@ -99,7 +99,23 @@ public class RentalRequest {
         }
 
         public RentalRequest build() {
+            requireText(customerId, "Customer id");
+            requireText(vehicleId, "Vehicle id");
+            requireText(modality, "Modality");
+            requireText(paymentToken, "Payment token");
+            if (startDate == null || endDate == null) {
+                throw new IllegalArgumentException("Start date and end date are required.");
+            }
+            if (!startDate.isBefore(endDate)) {
+                throw new IllegalArgumentException("Start date must be before end date.");
+            }
             return new RentalRequest(this);
+        }
+
+        private void requireText(String value, String fieldName) {
+            if (value == null || value.trim().isEmpty()) {
+                throw new IllegalArgumentException(fieldName + " is required.");
+            }
         }
     }
 }
