@@ -21,6 +21,16 @@ public class VehicleService {
         return vehicleRepository.count();
     }
 
+    public Vehicle findVehicleById(String vehicleId) {
+        for (Vehicle vehicle: vehicleRepository.findAll()) {
+            if (vehicle.getId().equals(vehicleId)) {
+                return vehicle;
+            }
+        }
+
+        throw new IllegalArgumentException("Vehicle with id: " + vehicleId + " not found");
+    }
+
     public Vehicle registerVehicle(String brand, String model, String category,
                                    String modelYearText, String dailyRateText) {
         String cleanBrand = requireText(brand, "Brand");
