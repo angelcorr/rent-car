@@ -12,6 +12,8 @@ public class Reservation {
     private final LocalDate endDate;
     private final ReservationStatus status;
     private final String modality;
+    private final double totalCost;
+    private final String description;
 
     private Reservation(Builder builder){
         this.id = builder.id;
@@ -21,6 +23,8 @@ public class Reservation {
         this.endDate = builder.endDate;
         this.status = builder.status;
         this.modality = builder.modality;
+        this.totalCost = builder.totalCost;
+        this.description = builder.description;
     }
 
     public String getId() {
@@ -50,6 +54,15 @@ public class Reservation {
     public String getModality() {
         return modality;
     }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     //Create Class Builder
     public static class Builder{
         private String id;
@@ -59,6 +72,8 @@ public class Reservation {
         private LocalDate endDate;
         private ReservationStatus status;
         private String modality;
+        private double totalCost;
+        private String description;
 
     public Builder id (String id){
         this.id= id;
@@ -89,10 +104,21 @@ public class Reservation {
         this.status= status;
         return this;
     }
-        public Builder modality (String modality){
-            this.modality= modality;
-            return this;
-        }
+
+    public Builder modality (String modality){
+        this.modality= modality;
+        return this;
+    }
+
+    public Builder totalCost (double totalCost) {
+        this.totalCost= totalCost;
+        return this;
+    }
+
+    public Builder description (String description) {
+        this.description= description;
+        return this;
+    }
 
     public Reservation build(){
         return new Reservation(this);

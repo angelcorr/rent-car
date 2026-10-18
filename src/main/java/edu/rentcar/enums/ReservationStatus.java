@@ -1,7 +1,7 @@
 package edu.rentcar.enums;
 
 public enum ReservationStatus {
-    COMPLETED,
+    CONFIRMED,
     PENDING,
     FAILED,
 }

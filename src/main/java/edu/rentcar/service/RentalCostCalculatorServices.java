@@ -1,9 +1,9 @@
 package edu.rentcar.service;
 
-import edu.rentcar.interfaces.Assistance;
-import edu.rentcar.interfaces.Coverage;
-import edu.rentcar.interfaces.RentalModalityFactory;
-import edu.rentcar.interfaces.TariffPolicy;
+import edu.rentcar.factory.Assistance;
+import edu.rentcar.factory.Coverage;
+import edu.rentcar.factory.RentalModalityFactory;
+import edu.rentcar.factory.TariffPolicy;
 
 public class RentalCostCalculatorServices {
     private final TariffPolicy tariff;

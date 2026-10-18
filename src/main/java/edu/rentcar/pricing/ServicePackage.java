@@ -1,9 +1,6 @@
-package edu.rentcar.model;
-
-import edu.rentcar.pricing.RentService;
+package edu.rentcar.pricing;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ServicePackage implements RentService {
@@ -38,8 +35,12 @@ public class ServicePackage implements RentService {
   @Override
   public String getDescription() {
     StringBuilder result = new StringBuilder(name + " (" + description + "): ");
-    for (RentService service : servicesList) {
-      result.append(service.getDescription()).append(", ");
+    for (int i = 0; i < servicesList.size(); i++) {
+      result.append(servicesList.get(i).getDescription());
+
+      if (i < servicesList.size() - 1) {
+        result.append(", ");
+      }
     }
     return result.toString();
   }

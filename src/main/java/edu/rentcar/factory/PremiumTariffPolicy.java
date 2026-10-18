@@ -1,7 +1,5 @@
 package edu.rentcar.factory;
 
-import edu.rentcar.interfaces.TariffPolicy;
-
 public class PremiumTariffPolicy implements TariffPolicy {
     @Override
     public double value(double baseCost) {
