@@ -4,7 +4,7 @@ import edu.rentcar.enums.ReservationStatus;
 import edu.rentcar.facade.RentalFacade;
 import edu.rentcar.facade.RentalResult;
 import edu.rentcar.model.RentalRequest;
-import edu.rentcar.payment.CustomerVerifier;
+import edu.rentcar.payment.CustomerVerificationService;
 import edu.rentcar.payment.PaymentGateway;
 import edu.rentcar.payment.PaymentGatewayProxy;
 import edu.rentcar.payment.PaymentStatus;
@@ -131,7 +131,7 @@ public class RentalFacadeTest {
   @Test
   void unauthorizedCustomerNeverCallsTheApi() {
     FakeGateway api = new FakeGateway();
-    CustomerVerifier denyAll = customerId -> false;
+    CustomerVerificationService denyAll = customerId -> false;
     RentalFacade protectedFacade = new RentalFacade(
         new VehicleService(new VehicleRepository()),
         new ReservationService(),

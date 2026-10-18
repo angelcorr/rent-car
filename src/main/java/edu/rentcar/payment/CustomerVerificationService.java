@@ -1,5 +1,5 @@
 package edu.rentcar.payment;
 
-public interface CustomerVerifier {
+public interface CustomerVerificationService {
   boolean isAuthorized(String customerId);
 }

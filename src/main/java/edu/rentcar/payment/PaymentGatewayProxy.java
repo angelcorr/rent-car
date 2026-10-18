@@ -2,9 +2,9 @@ package edu.rentcar.payment;
 
 public class PaymentGatewayProxy implements PaymentGateway {
   private final PaymentGateway realGateway;
-  private final CustomerVerifier verifier;
+  private final CustomerVerificationService verifier;
 
-  public PaymentGatewayProxy(PaymentGateway realGateway, CustomerVerifier verifier) {
+  public PaymentGatewayProxy(PaymentGateway realGateway, CustomerVerificationService verifier) {
     this.realGateway = realGateway;
     this.verifier = verifier;
   }
